@@ -18,17 +18,22 @@ class PositionsService {
     if(document.getElementById(positions[Number(number) - ProxyState.moves.pawn.captureRight].id).childNodes[0].childNodes[0].childNodes[0]){
       checkRight = document.getElementById(positions[Number(number) - ProxyState.moves.pawn.captureRight].id).childNodes[0].childNodes[0].childNodes[0].classList.contains('white-piece')
     }
-    
-    if(captureLeft != '.' && !checkLeft){
+
+    // CAPTURES
+    if(captureLeft != '.' && !checkLeft && (ProxyState.boardPostitions[number].toString()[0] != 'a')){
       showCaptures.push(Number(number) - ProxyState.moves.pawn.captureLeft)
     }
-    if(captureRight != '.' && !checkRight){
+    if(captureRight != '.' && !checkRight && (ProxyState.boardPostitions[number].toString()[0] != 'h')){
       showCaptures.push(Number(number) - ProxyState.moves.pawn.captureRight)
     }
-    if(ProxyState.currentNotation[number] == ProxyState.startingNotation[number]){
+
+    // MOVES
+    if((ProxyState.currentNotation[number] == ProxyState.startingNotation[number]) && (ProxyState.currentNotation[Number(number) - 8] == '.')){
       showMoves.push(Number(number) - ProxyState.moves.pawn.start)
     }
     showMoves.push(Number(number) - ProxyState.moves.pawn.normal)
+
+    // ADD AND RESET
     showMoves.forEach(move =>
       document.getElementById(positions[move].id).childNodes[0].classList.add('selected')
     )
@@ -61,16 +66,21 @@ class PositionsService {
       checkRight = document.getElementById(positions[Number(number) + ProxyState.moves.pawn.captureRight].id).childNodes[0].childNodes[0].childNodes[0].classList.contains('black-piece')
     }
     
-    if(captureLeft != '.' && !checkLeft){
+    // CAPTURES
+    if(captureLeft != '.' && !checkLeft && (ProxyState.boardPostitions[number].toString()[0] != 'h')){
       showCaptures.push(Number(number) + ProxyState.moves.pawn.captureLeft)
     }
-    if(captureRight != '.' && !checkRight){
+    if(captureRight != '.' && !checkRight && (ProxyState.boardPostitions[number].toString()[0] != 'a')){
       showCaptures.push(Number(number) + ProxyState.moves.pawn.captureRight)
     }
-    if(ProxyState.currentNotation[number] == ProxyState.startingNotation[number]){
+
+    // MOVES
+    if((ProxyState.currentNotation[number] == ProxyState.startingNotation[number]) && (ProxyState.currentNotation[Number(number) + 8] == '.')){
       showMoves.push(Number(number) + ProxyState.moves.pawn.start)
     }
     showMoves.push(Number(number) + ProxyState.moves.pawn.normal)
+
+    // ADD AND RESET
     showMoves.forEach(move =>
       document.getElementById(positions[move].id).childNodes[0].classList.add('selected')
     )
