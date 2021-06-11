@@ -47,10 +47,12 @@ body {
 
 .white-piece {
   color: white;
+  -webkit-text-stroke: 1px black;
 }
 
 .black-piece {
   color: black;
+  -webkit-text-stroke: 1px white;
 }
 
 .hidden {
