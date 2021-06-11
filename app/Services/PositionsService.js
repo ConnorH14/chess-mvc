@@ -144,7 +144,7 @@ class PositionsService {
     }
     
     for(let i = 0; i < showMoves.length; i++){
-      if(showMoves[i] <= 64){
+      if(showMoves[i] <= 64 && showMoves[i] > -1){
         if(ProxyState.currentNotation[showMoves[i]] != '.'){
           showCaptures.push(showMoves[i])
         }
@@ -152,7 +152,7 @@ class PositionsService {
     }
 
     for(let i = 0; i < showCaptures.length; i++){
-      if(showMoves[i] <= 64 && (!positions[showCaptures[i]].childNodes[0].childNodes[0].childNodes[0].classList.contains('white-piece'))){
+      if(showMoves[i] <= 64 && showMoves[i] > -1 && (!positions[showCaptures[i]].childNodes[0].childNodes[0].childNodes[0].classList.contains('white-piece'))){
         console.log()
         document.getElementById(positions[showCaptures[i]].id).childNodes[0].classList.add('capture')
         document.getElementById(positions[showCaptures[i]].id).setAttribute("onclick", `app.gameController.capture('n', '${id}','${number}','${showCaptures[i]}')`)
@@ -197,6 +197,22 @@ class PositionsService {
       if(positions[showMoves[i]] && ProxyState.currentNotation[showMoves[i]] == '.'){
         document.getElementById(positions[showMoves[i]].id).childNodes[0].classList.add('selected')
         document.getElementById(positions[showMoves[i]].id).setAttribute("onclick", `app.gameController.move('N', '${id}','${number}','${showMoves[i]}')`)
+      }
+    }
+    
+    for(let i = 0; i < showMoves.length; i++){
+      if(showMoves[i] <= 64 && showMoves[i] > -1){
+        if(ProxyState.currentNotation[showMoves[i]] != '.'){
+          showCaptures.push(showMoves[i])
+        }
+      }
+    }
+
+    for(let i = 0; i < showCaptures.length; i++){
+      if(showMoves[i] <= 64 && showMoves[i] > -1 && (!positions[showCaptures[i]].childNodes[0].childNodes[0].childNodes[0].classList.contains('black-piece'))){
+        console.log()
+        document.getElementById(positions[showCaptures[i]].id).childNodes[0].classList.add('capture')
+        document.getElementById(positions[showCaptures[i]].id).setAttribute("onclick", `app.gameController.capture('N', '${id}','${number}','${showCaptures[i]}')`)
       }
     }
   }
