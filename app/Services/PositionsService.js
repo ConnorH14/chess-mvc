@@ -29,9 +29,13 @@ class PositionsService {
 
     // MOVES
     if((ProxyState.currentNotation[number] == ProxyState.startingNotation[number]) && (ProxyState.currentNotation[Number(number) - 8] == '.')){
-      showMoves.push(Number(number) - ProxyState.moves.pawn.start)
+      if(ProxyState.currentNotation[Number(number) - ProxyState.moves.pawn.start] == '.'){
+        showMoves.push(Number(number) - ProxyState.moves.pawn.start)
+      }
     }
-    showMoves.push(Number(number) - ProxyState.moves.pawn.normal)
+    if(ProxyState.currentNotation[Number(number) - ProxyState.moves.pawn.normal] == '.'){
+      showMoves.push(Number(number) - ProxyState.moves.pawn.normal)
+    }
 
     // ADD AND RESET
     showMoves.forEach(move =>
@@ -76,9 +80,13 @@ class PositionsService {
 
     // MOVES
     if((ProxyState.currentNotation[number] == ProxyState.startingNotation[number]) && (ProxyState.currentNotation[Number(number) + 8] == '.')){
-      showMoves.push(Number(number) + ProxyState.moves.pawn.start)
+      if(ProxyState.currentNotation[Number(number) + ProxyState.moves.pawn.start] == '.'){
+        showMoves.push(Number(number) + ProxyState.moves.pawn.start)
+      }
     }
-    showMoves.push(Number(number) + ProxyState.moves.pawn.normal)
+    if(ProxyState.currentNotation[Number(number) + ProxyState.moves.pawn.normal] == '.'){
+      showMoves.push(Number(number) + ProxyState.moves.pawn.normal)
+    }
 
     // ADD AND RESET
     showMoves.forEach(move =>
@@ -93,6 +101,104 @@ class PositionsService {
     showCaptures.forEach(cap =>
       document.getElementById(positions[cap].id).setAttribute("onclick", `app.gameController.capture('P', '${id}','${number}','${cap}')`)
     )
+  }
+
+  moveWhiteKnight(id, number){
+    console.log(`move the ${ProxyState.currentNotation[number]} on ${id}`)
+    let showMoves = []
+    let showCaptures = []
+
+    const positions = ProxyState.positions
+
+    if(ProxyState.boardPostitions[number].toString()[1] != '7' && ProxyState.boardPostitions[number].toString()[1] != '8'){
+      if(ProxyState.boardPostitions[number].toString()[0] != 'a'){
+        showMoves.push(Number(number) - ProxyState.moves.knight.yLeft)
+      }
+      if(ProxyState.boardPostitions[number].toString()[0] != 'h'){
+        showMoves.push(Number(number) - ProxyState.moves.knight.yRight)
+      }
+    }
+    if(ProxyState.boardPostitions[number].toString()[1] != '2' && ProxyState.boardPostitions[number].toString()[1] != '1'){
+      if(ProxyState.boardPostitions[number].toString()[0] != 'h'){
+        showMoves.push(Number(number) + ProxyState.moves.knight.yLeft)
+      }
+      if(ProxyState.boardPostitions[number].toString()[0] != 'a'){
+        showMoves.push(Number(number) + ProxyState.moves.knight.yRight)
+      }
+    }
+    if(ProxyState.boardPostitions[number].toString()[0] != 'a' && ProxyState.boardPostitions[number].toString()[0] != 'b'){
+      showMoves.push(Number(number) - ProxyState.moves.knight.xNormal)
+      showMoves.push(Number(number) + ProxyState.moves.knight.xInverse)
+    }
+
+    if(ProxyState.boardPostitions[number].toString()[0] != 'g' && ProxyState.boardPostitions[number].toString()[0] != 'h'){
+      showMoves.push(Number(number) - ProxyState.moves.knight.xInverse)
+      showMoves.push(Number(number) + ProxyState.moves.knight.xNormal)
+    }
+    
+    for(let i = 0; i < showMoves.length; i++){
+      if(positions[showMoves[i]] && ProxyState.currentNotation[showMoves[i]] == '.'){
+        document.getElementById(positions[showMoves[i]].id).childNodes[0].classList.add('selected')
+        document.getElementById(positions[showMoves[i]].id).setAttribute("onclick", `app.gameController.move('n', '${id}','${number}','${showMoves[i]}')`)
+      }
+    }
+    
+    for(let i = 0; i < showMoves.length; i++){
+      if(showMoves[i] <= 64){
+        if(ProxyState.currentNotation[showMoves[i]] != '.'){
+          showCaptures.push(showMoves[i])
+        }
+      }
+    }
+
+    for(let i = 0; i < showCaptures.length; i++){
+      if(showMoves[i] <= 64 && (!positions[showCaptures[i]].childNodes[0].childNodes[0].childNodes[0].classList.contains('white-piece'))){
+        console.log()
+        document.getElementById(positions[showCaptures[i]].id).childNodes[0].classList.add('capture')
+        document.getElementById(positions[showCaptures[i]].id).setAttribute("onclick", `app.gameController.capture('n', '${id}','${number}','${showCaptures[i]}')`)
+      }
+    }
+  }
+
+  moveBlackKnight(id, number){
+    console.log(`move the ${ProxyState.currentNotation[number]} on ${id}`)
+    let showMoves = []
+    let showCaptures = []
+
+    const positions = ProxyState.positions
+
+    if(ProxyState.boardPostitions[number].toString()[1] != '7' && ProxyState.boardPostitions[number].toString()[1] != '8'){
+      if(ProxyState.boardPostitions[number].toString()[0] != 'a'){
+        showMoves.push(Number(number) - ProxyState.moves.knight.yLeft)
+      }
+      if(ProxyState.boardPostitions[number].toString()[0] != 'h'){
+        showMoves.push(Number(number) - ProxyState.moves.knight.yRight)
+      }
+    }
+    if(ProxyState.boardPostitions[number].toString()[1] != '2' && ProxyState.boardPostitions[number].toString()[1] != '1'){
+      if(ProxyState.boardPostitions[number].toString()[0] != 'h'){
+        showMoves.push(Number(number) + ProxyState.moves.knight.yLeft)
+      }
+      if(ProxyState.boardPostitions[number].toString()[0] != 'a'){
+        showMoves.push(Number(number) + ProxyState.moves.knight.yRight)
+      }
+    }
+    if(ProxyState.boardPostitions[number].toString()[0] != 'a' && ProxyState.boardPostitions[number].toString()[0] != 'b'){
+      showMoves.push(Number(number) - ProxyState.moves.knight.xNormal)
+      showMoves.push(Number(number) + ProxyState.moves.knight.xInverse)
+    }
+
+    if(ProxyState.boardPostitions[number].toString()[0] != 'g' && ProxyState.boardPostitions[number].toString()[0] != 'h'){
+      showMoves.push(Number(number) - ProxyState.moves.knight.xInverse)
+      showMoves.push(Number(number) + ProxyState.moves.knight.xNormal)
+    }
+    
+    for(let i = 0; i < showMoves.length; i++){
+      if(positions[showMoves[i]] && ProxyState.currentNotation[showMoves[i]] == '.'){
+        document.getElementById(positions[showMoves[i]].id).childNodes[0].classList.add('selected')
+        document.getElementById(positions[showMoves[i]].id).setAttribute("onclick", `app.gameController.move('N', '${id}','${number}','${showMoves[i]}')`)
+      }
+    }
   }
 }
 
