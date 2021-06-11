@@ -177,6 +177,11 @@ function _writeNotation(){
   for(let i = 0; i < positions.length; i++){
     positions[i].innerHTML = returnNotation[i]
   }
+  if(ProxyState.whiteTurn){
+    document.getElementById('current-turn').innerText = 'White'
+  }else{
+    document.getElementById('current-turn').innerText = 'Black'
+  }
 }
 
 //Public

@@ -22,17 +22,22 @@ export default class GameController {
     console.log("update", id, ProxyState.currentNotation[number])
   
     // MOVES FOR WHITE PAWN
-    if(ProxyState.currentNotation[number] == 'p'){
+    if(ProxyState.currentNotation[number] == 'p' && ProxyState.whiteTurn){
       positionsService.moveWhitePawn(id, number)
     }
   
     // MOVES FOR BLACK PAWN
-    if(ProxyState.currentNotation[number] == 'P'){
+    if(ProxyState.currentNotation[number] == 'P' && !ProxyState.whiteTurn){
       positionsService.moveBlackPawn(id, number)
     }
   }
 
   move(item, id, number, move){
+    if(ProxyState.whiteTurn){
+      ProxyState.whiteTurn = false
+    } else {
+      ProxyState.whiteTurn = true
+    }
     console.log('move the', item, 'at', id, 'from', number, 'to', move)
     if(ProxyState.currentNotation[move] == '.'){
       ProxyState.currentNotation[move] = item
@@ -45,6 +50,11 @@ export default class GameController {
   }
 
   capture(item, id, number, cap){
+    if(ProxyState.whiteTurn){
+      ProxyState.whiteTurn = false
+    } else {
+      ProxyState.whiteTurn = true
+    }
     console.log(`The ${item} on ${id} moves from ${number} to ${cap} and takes the ${ProxyState.currentNotation[cap]} on ${ProxyState.positions[cap].id}`)
     ProxyState.currentNotation[number] = '.'
     ProxyState.currentNotation[cap] = item
