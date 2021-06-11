@@ -23,7 +23,7 @@ export default class GameController {
   
     
     // MOVES IF WHITE TURN
-    //if(ProxyState.whiteTurn){ --TODO remove // for turn function
+    if(ProxyState.whiteTurn){ //--TODO remove // for turn function
       // MOVES FOR WHITE PAWN
       if(ProxyState.currentNotation[number] == 'p'){
         positionsService.moveWhitePawn(id, number)
@@ -32,10 +32,10 @@ export default class GameController {
       if(ProxyState.currentNotation[number] == 'n'){
         positionsService.moveWhiteKnight(id, number)
       }
-    //}
+    }
 
     // MOVES AVAILABLE IF IT IS NOT WHITES TURN
-    //if(!ProxyState.whiteTurn){ --TODO remove // for turn function
+    if(!ProxyState.whiteTurn){ //--TODO remove // for turn function
       // MOVES FOR BLACK PAWN
       if(ProxyState.currentNotation[number] == 'P'){
         positionsService.moveBlackPawn(id, number)
@@ -44,7 +44,7 @@ export default class GameController {
       if(ProxyState.currentNotation[number] == 'N'){
         positionsService.moveBlackKnight(id, number)
       }
-    //}
+    }
   }
 
   move(item, id, number, move){
